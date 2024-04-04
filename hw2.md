@@ -58,39 +58,39 @@ Titanic> db.titanic.findOne()
 ## Создать индексы и сравнить производительность
 Проверим как он выводит без индекса
 ```
-Titanic> db.titanic.find({Sex:'male'}).explain('executionStats')
+Titanic> db.titanic.find({Age:22}).explain('executionStats')
 {
   explainVersion: '1',
   queryPlanner: {
     namespace: 'Titanic.titanic',
     indexFilterSet: false,
-    parsedQuery: { Sex: { '$eq': 'male' } },
-    queryHash: '861DC9A7',
-    planCacheKey: '861DC9A7',
+    parsedQuery: { Age: { '$eq': 22 } },
+    queryHash: 'D2E0353D',
+    planCacheKey: 'D2E0353D',
     maxIndexedOrSolutionsReached: false,
     maxIndexedAndSolutionsReached: false,
     maxScansToExplodeReached: false,
     winningPlan: {
       stage: 'COLLSCAN',
-      filter: { Sex: { '$eq': 'male' } },
+      filter: { Age: { '$eq': 22 } },
       direction: 'forward'
     },
     rejectedPlans: []
   },
   executionStats: {
     executionSuccess: true,
-    nReturned: 572,
+    nReturned: 39,
     executionTimeMillis: 0,
     totalKeysExamined: 0,
     totalDocsExamined: 887,
     executionStages: {
       stage: 'COLLSCAN',
-      filter: { Sex: { '$eq': 'male' } },
-      nReturned: 572,
+      filter: { Age: { '$eq': 22 } },
+      nReturned: 39,
       executionTimeMillisEstimate: 0,
       works: 888,
-      advanced: 572,
-      needTime: 315,
+      advanced: 39,
+      needTime: 848,
       needYield: 0,
       saveState: 0,
       restoreState: 0,
@@ -99,7 +99,7 @@ Titanic> db.titanic.find({Sex:'male'}).explain('executionStats')
       docsExamined: 887
     }
   },
-  command: { find: 'titanic', filter: { Sex: 'male' }, '$db': 'Titanic' },
+  command: { find: 'titanic', filter: { Age: 22 }, '$db': 'Titanic' },
   serverInfo: {
     host: '9bd9e288a8fc',
     port: 27017,
@@ -122,53 +122,89 @@ Titanic> db.titanic.find({Sex:'male'}).explain('executionStats')
 ```
 Теперь добавим индекс 
 ```
-Titanic> db.titanic.createIndex({Sex:'male'})
-Sex_male
+Titanic> db.titanic.createIndex({Age:22})
+Age_22
 ```
 И еще раз посмотрим скорость
 ```
-Titanic> db.titanic.find({Sex:'male'}).explain('executionStats')
+Titanic> db.titanic.find({Age:22}).explain('executionStats')
 {
   explainVersion: '1',
   queryPlanner: {
     namespace: 'Titanic.titanic',
     indexFilterSet: false,
-    parsedQuery: { Sex: { '$eq': 'male' } },
-    queryHash: '861DC9A7',
-    planCacheKey: '861DC9A7',
+    parsedQuery: { Age: { '$eq': 22 } },
+    queryHash: 'D2E0353D',
+    planCacheKey: '68E30953',
     maxIndexedOrSolutionsReached: false,
     maxIndexedAndSolutionsReached: false,
     maxScansToExplodeReached: false,
     winningPlan: {
-      stage: 'COLLSCAN',
-      filter: { Sex: { '$eq': 'male' } },
-      direction: 'forward'
+      stage: 'FETCH',
+      inputStage: {
+        stage: 'IXSCAN',
+        keyPattern: { Age: 22 },
+        indexName: 'Age_22',
+        isMultiKey: false,
+        multiKeyPaths: { Age: [] },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: { Age: [ '[22, 22]' ] }
+      }
     },
     rejectedPlans: []
   },
   executionStats: {
     executionSuccess: true,
-    nReturned: 572,
-    executionTimeMillis: 0,
-    totalKeysExamined: 0,
-    totalDocsExamined: 572,
+    nReturned: 39,
+    executionTimeMillis: 1,
+    totalKeysExamined: 39,
+    totalDocsExamined: 39,
     executionStages: {
-      stage: 'COLLSCAN',
-      filter: { Sex: { '$eq': 'male' } },
-      nReturned: 572,
+      stage: 'FETCH',
+      nReturned: 39,
       executionTimeMillisEstimate: 0,
-      works: 888,
-      advanced: 572,
-      needTime: 315,
+      works: 40,
+      advanced: 39,
+      needTime: 0,
       needYield: 0,
       saveState: 0,
       restoreState: 0,
       isEOF: 1,
-      direction: 'forward',
-      docsExamined: 887
+      docsExamined: 39,
+      alreadyHasObj: 0,
+      inputStage: {
+        stage: 'IXSCAN',
+        nReturned: 39,
+        executionTimeMillisEstimate: 0,
+        works: 40,
+        advanced: 39,
+        needTime: 0,
+        needYield: 0,
+        saveState: 0,
+        restoreState: 0,
+        isEOF: 1,
+        keyPattern: { Age: 22 },
+        indexName: 'Age_22',
+        isMultiKey: false,
+        multiKeyPaths: { Age: [] },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: { Age: [ '[22, 22]' ] },
+        keysExamined: 39,
+        seeks: 1,
+        dupsTested: 0,
+        dupsDropped: 0
+      }
     }
   },
-  command: { find: 'titanic', filter: { Sex: 'male' }, '$db': 'Titanic' },
+  command: { find: 'titanic', filter: { Age: 22 }, '$db': 'Titanic' },
   serverInfo: {
     host: '9bd9e288a8fc',
     port: 27017,
@@ -189,4 +225,5 @@ Titanic> db.titanic.find({Sex:'male'}).explain('executionStats')
   ok: 1
 }
 ```
-Было 'totalDocsExamined: 887', стало 'totalDocsExamined: 572'.
+Было 'totalDocsExamined: 887', стало 'totalDocsExamined: 39'.
+Было 'needTime: 848', стало 'needTime: 0'.
