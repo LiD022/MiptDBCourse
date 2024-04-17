@@ -4,7 +4,7 @@
 
 - [Скрипт на python](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/load_strings.py) для сохранения в формате строки. Время работы:
 
-  [!](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/load_string.png)
+  ![image](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/load_string.png)
 
 - [Скрипт на python](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/read_strings.py) для чтения в формате строки. Время работы:
 
