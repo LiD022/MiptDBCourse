@@ -25,7 +25,7 @@ if __name__ == '__main__':
         for h_key in unit[1]:
             print('\t', '\t', h_key)
 
-    print('\n \t', 'hset keys values:')
+    print('\n\t', 'hset keys values:')
     k_v = enumerate(r.keys('*:hset'))
     v_indx = 0
     start = time.time()
@@ -34,12 +34,12 @@ if __name__ == '__main__':
     end = time.time()
     
 
-    print('\n Time left for get all keys for ALL hset-substructures', end - start, 'sec')
+    print('\nTime left for get all keys for ALL hset-substructures', end - start, 'sec')
     print('Units count:', v_indx+1)
 
     # LIST
 
-    print('\n \t', 'list keys values:')
+    print('\n\t', 'list keys values:')
     k_v = enumerate(r.keys('*:list__*'))
     v_indx = 0
     start = time.time()
@@ -47,12 +47,12 @@ if __name__ == '__main__':
         units = r.lrange(v, 0, -1)
     end = time.time()
     
-    print('\n Time left for get values from lists:', end - start, 'sec')
+    print('\nTime left for get values from lists:', end - start, 'sec')
     print('Units count:', v_indx + 1)
 
     # ZSET
 
-    print('\n \t', 'zset keys values:')
+    print('\n\t', 'zset keys values:')
     k_v = enumerate(r.keys('*:zset__*'))
     v_indx = 0
     start = time.time()
@@ -60,5 +60,5 @@ if __name__ == '__main__':
         units = r.zrange(v, 0, -1)
     end = time.time()
   
-    print('\n Time left for get values from zset:', end - start, 'sec')
+    print('\nTime left for get values from zset:', end - start, 'sec')
     print('Units count:', v_indx + 1)
