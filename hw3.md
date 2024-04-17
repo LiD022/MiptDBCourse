@@ -21,3 +21,21 @@
 Очевидно, что вставка/выборка данных в виде строк почти всегда быстрее, чем использование специальных структур.
 
 ## Настройка redis кластера на 3-х нодах
+- Создаем кластер с помощью minikube и kubernetes:
+
+```
+minikube start --cpus=6 --memory=6000 --nodes=4  --kubernetes-version v1.28.8 
+```
+- С помощью конфигурации получаем отказоустойчивый кластер:
+```
+kubectl get po -n redis                                            
+
+NAME           READY   STATUS    RESTARTS   AGE
+redis-node-0   3/3     Running   0          54s
+redis-node-1   3/3     Running   0          32s
+redis-node-2   3/3     Running   0          16s
+```
+- Тюнинг таймаутов в спецификации RedisCluster в конфигурационном файле:
+```
+kubectl create configmap redis-config --namespace=default --from-literal=timeout=500
+```
