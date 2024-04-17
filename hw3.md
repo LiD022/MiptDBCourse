@@ -4,19 +4,19 @@
 
 - [Скрипт на python](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/load_strings.py) для сохранения в формате строки. Время работы:
 
-  ![image](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/load_string.png)
+  ![image](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/load_strings.png)
 
 - [Скрипт на python](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/read_strings.py) для чтения в формате строки. Время работы:
 
-  
+  ![image](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/read_string.png)
 
 - [Скрипт на python](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/load_structure.py) для сохранения сложных структуры (ключам были даны названия для простоты). Время работы:
 
-  
+  ![image](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/load_structure.png)
 
 - [Скрипт на python](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/read_structure.py) для чтения сложной структуры. Время работы:
 
-  
+  ![image](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/read_structure.png)
 
 Очевидно, что вставка/выборка данных в виде строк почти всегда быстрее, чем использование специальных структур.
 
