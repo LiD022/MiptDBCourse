@@ -16,7 +16,7 @@
 
 - [Скрипт на python](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/read_structure.py) для чтения сложной структуры. Время работы:
 
-  ![image](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/read_structure.png)
+  ![image](https://github.com/LiD022/MiptDBCourse/blob/main/redis_py_files/read_sructure.png)
 
 Очевидно, что вставка/выборка данных в виде строк почти всегда быстрее, чем использование специальных структур.
 
